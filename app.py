@@ -32,6 +32,7 @@ users = [
 @app.route('/')
 def index():
     return "<h1>Welcome To Mantainance-Tracker</h2>"
+    
 # this is the method that fetch all the requests of a logged in user
 @app.route('/api/v1.0/users/requsets', methods=['GET'])
 def get_requests( ):
@@ -44,6 +45,8 @@ def get_user(user_id):
     if len(user) == 0:
         abort(404)
     return jsonify({'user': user[0]})
+
+
 
 
 if __name__ == '__main__':
