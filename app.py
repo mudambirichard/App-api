@@ -38,7 +38,7 @@ def get_requests( ):
     return jsonify({'users': users})
 
 #this is the method that fetcth the request that belongs to the logged in user
-@app.route('/api/v1/users/requests/<init:user_id>', methods=['GET'])
+@app.route('/api/v1/users/requests/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = [user for user in users if user ['id'] == user_id]
     if len(user) == 0:
