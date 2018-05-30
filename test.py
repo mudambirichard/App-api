@@ -19,6 +19,21 @@ class FlaskTestCase(unittest.TestCase):
         response = tester.get('http://127.0.0.15000/api/v1.0/users/requests/<int:user_id>')
         self.assertEqual(response.status_code, 404 )
 
+    def test_create_request(self):
+        tester = app.test_client(self)
+        response = tester.post('/api/v1/users/requests',data=json.dumps(
+            dict(name="kevin", username="wise", email="me@gmail.com")),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 404)
+    
+
+    def test_update_user(self):
+        tester = app.test_client(self)
+        response = tester.put('/api/v1/users/requests/<int:user_id>',data=json.dumps(
+            dict(name="kevin", username="wise", email="me@gmail.com")),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()
