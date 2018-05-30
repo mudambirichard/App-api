@@ -46,6 +46,20 @@ def get_user(user_id):
         abort(404)
     return jsonify({'user': user[0]})
 
+#This method Create a request
+@app.route('/api/v1/users/requests/', methods=['POST'])
+def create_request():
+    if not request.json or not 'name' in request.json:
+        abort(400)
+    usr = {
+        'id' : users[-1]['id'] + 1,
+        'name' : request.json['name'],
+        'password' : request.json['password'],
+        'email' :request.json['email']
+    }
+    user.append(usr)
+    return jsonify({'user' : users})
+
 
 
 
