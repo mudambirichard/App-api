@@ -31,21 +31,7 @@ users = [
 ]
 @app.route('/')
 def index():
-    return "<h1>Welcome To Mantainance-Tracker</h2>"
-
-# this is the method that fetch all the requests of a logged in user
-@app.route('/api/v1.0/users/requests', methods=['GET'])
-def get_requests( ):
-    return jsonify({'users': users})
-
-
-#this is the method that fetcth the request that belongs to the logged in user
-@app.route('/api/v1/users/requests/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = [user for user in users if user ['id'] == user_id]
-    if len(user) == 0:
-        abort(404)
-    return jsonify({'user': user[0]})
+    return "<h1>Welcome To Mantainance-Tracker</h2>
 
 
 # this method Create a request.
@@ -62,25 +48,6 @@ def create_request():
     users.append(usr)
     return jsonify({'users' : users})
 
-    #this methods Modify a request
-    @app.route('/api/v1/users/requests/<int_id>', methods=['PUT'])
-    def update_user(user_id):
-        user = [user for user in users if user['id'] == user_id]
-        if len(user) == 0:
-            abort(404)
-        if not request.json:
-            abort(400)
-        if 'name' in request.json and type (request.json['name']) != unicode: 
-            abort(400)
-        if 'email' in request.json and type (request.json['email']) != unicode:
-            abort(400)
-        if 'password' in request.json and type (request.json['password']) != unicode:
-            abort(404)
-        
-        user[0]['user'] = request.json.get('name',user[0]['name'])
-        user[0]['user'] = request.json.get('password',user[0]['password'])
-        user[0]['user'] = request.json.get('email',user[0]['email'])
-        return jsonify({'user' : user[0]})
 
     
 
