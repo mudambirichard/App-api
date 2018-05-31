@@ -1,6 +1,5 @@
 from app import app
 import unittest
-import requests
 import json
 
 BASE_URL = 'http://127.0.0.15000/api/v1/users/requests'
@@ -24,7 +23,7 @@ class FlaskTestCase(unittest.TestCase):
         response = tester.post('/api/v1/users/requests',data=json.dumps(
             dict(name="kevin", username="wise", email="me@gmail.com")),
             content_type="application/json")
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 301)
     
 
     def test_update_user(self):
