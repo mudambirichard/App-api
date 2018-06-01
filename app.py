@@ -34,14 +34,14 @@ def index():
     return "<h1>Welcome To Mantainance-Tracker</h2>"
     
 # this is the method that fetch all the requests of a logged in user
-@app.route('/api/v1.0/users/requsets', methods=['GET'])
-def get_requests( ):
+@app.route('/api/v1/users/requests/', methods=['GET'])
+def get_requests():
     return jsonify({'users': users})
 
 #this is the method that fetcth the request that belongs to the logged in user
-@app.route('/api/v1/users/requests/<int:user_id>', methods=['GET'])
+@app.route('/api/v1/users/requests/<int:user_id>/', methods=['GET'])
 def get_user(user_id):
-    user = [user for user in users if user ['id'] == user_id]
+    user = [user for user in users if user ['id'] == user_id] 
     if len(user) == 0:
         abort(404)
     return jsonify({'user': user[0]})
@@ -53,31 +53,37 @@ def create_request():
         abort(400)
     usr = {
         'id' : users[-1]['id'] + 1,
-        'name' : request.json['name'],
-        'password' : request.json['password'],
-        'email' :request.json['email']
+        'name' : request.get_json()['name'],
+        'password' : request.get_json()['password'],
+        'email' :request.get_json()['email']
     }
-    user.append(usr)
+    users.append(usr)
     return jsonify({'user' : users})
 
 #this method modify the brequest.
-@app.route('/api/v1/users/requests/<int:user_id>', methods=['PUT'])
+
+@app.route('/api/v1/users/requests/<int:user_id>/', methods=['PUT'])
 def update_user(user_id):
-    user = [user for user in users if users['id'] == user_id]
-    if len(user) == 0:
+
+    if len(request.json) == 0:
         abort(404)
     if not request.json:
         abort(400)
-    if 'name' in request.json and type (request.json['name']) != unicode:
+    if not 'name' in request.json: 
         abort(400)
-    if 'password' in request.json and type (request.json['password']) != unicode:
+    if not 'password' in request.json:
         abort(400)
-    if 'email' in request.json and type (request.json['email']) != unicode:
+    if not 'email' in request.json: 
         abort(400)
-    user[0]['user'] = request.json.get('name',user[0]['name'])
-    user[0]['user'] = request.json.get('password',user[0]['password'])
-    user[0]['user'] = request.json.get('email',user[0]['email'])
-    return  jsonify({'user':user[0]})
+    ind = user_id -1 
+    obj = users[ind]
+    obj["name"] = request.get_json()['name']
+    obj["password"] = request.get_json()["password"]
+    obj["email"] = request.get_json()["email"]
+
+    users[ind] = obj
+    
+    return jsonify(obj),200
 
 
 
